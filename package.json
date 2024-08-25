@@ -1,16 +1,23 @@
 {
   "name": "bfhl",
   "version": "1.0.0",
-  "description": "",
+  "description": "A basic Express application.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["express"],
+  "author": "Your Name",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "body-parser": "^1.20.1",
+    "cookie-parser": "^1.4.6",
+    "debug": "^2.6.9",
+    "etag": "^1.8.1",
+    "express": "^4.18.2",
+    "finalhandler": "^1.2.0",
+    "mime-types": "^2.1.34",
+    "serve-static": "^1.15.0"
   }
 }

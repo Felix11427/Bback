@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './App.css'; // Import the CSS file
 
 function App() {
   const [inputValue, setInputValue] = useState('');
@@ -7,13 +8,13 @@ function App() {
   const [error, setError] = useState('');
   const [dropdownValue, setDropdownValue] = useState([]);
   const [options] = useState([
-    'Alphabets',
-    'Numbers',
-    'Highest lowercase alphabet',
     'Status',
     'User ID',
     'College Email ID',
-    'College Roll Number'
+    'College Roll Number',
+    'Numbers',
+    'Alphabets',
+    'Highest lowercase alphabet'
   ]);
 
   const handleInputChange = (e) => {
@@ -37,7 +38,7 @@ function App() {
 
       setResponse(result.data);
     } catch (err) {
-      setError('Invalid JSON input');
+      setError('Invalid JSON input or API call failed');
     }
   };
 
@@ -49,13 +50,13 @@ function App() {
       'User ID': response.user_id || '',
       'College Email ID': response.college_email || '',
       'College Roll Number': response.college_roll_number || '',
-      Alphabets: response.alphabets || [],
       Numbers: response.numbers || [],
+      Alphabets: response.alphabets || [],
       'Highest lowercase alphabet': response.highestAlphabet || ''
     };
 
     return (
-      <div>
+      <div className="response-container">
         <h3>Response:</h3>
         <ul>
           {dropdownValue.map(option => (
@@ -70,23 +71,39 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Roll Number: 123456</h1>
-      <input
-        type="text"
-        value={inputValue}
-        onChange={handleInputChange}
-        placeholder='Enter JSON (e.g., { "data": ["A", "C", "z"] })'
-      />
-      <button onClick={handleSubmit}>Submit</button>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <select multiple={true} value={dropdownValue} onChange={handleDropdownChange}>
-        {options.map(option => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-      {renderResponse()}
+      <div className="container">
+        <div className="form-container log-in-container">
+          <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+            <h1>Submit JSON</h1>
+            <input
+              type="text"
+              value={inputValue}
+              onChange={handleInputChange}
+              placeholder='Enter JSON (e.g., { "data": ["A", "C", "z"] })'
+            />
+            <button type="submit">Submit</button>
+            {error && <p className="error">{error}</p>}
+          </form>
+        </div>
+        <div className="overlay-container">
+          <div className="overlay">
+            <div className="overlay-panel overlay-right">
+              <h1>JSON Response</h1>
+              <p>Display API response based on selected options.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <select multiple={true} value={dropdownValue} onChange={handleDropdownChange}>
+          {options.map(option => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+        {renderResponse()}
+      </div>
     </div>
   );
 }

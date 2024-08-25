@@ -9,7 +9,11 @@ function App() {
   const [options] = useState([
     'Alphabets',
     'Numbers',
-    'Highest lowercase alphabet'
+    'Highest lowercase alphabet',
+    'Status',
+    'User ID',
+    'College Email ID',
+    'College Roll Number'
   ]);
 
   const handleInputChange = (e) => {
@@ -29,7 +33,7 @@ function App() {
       const jsonData = JSON.parse(inputValue);
 
       // Make API call
-      const result = await axios.post('https://your-app.herokuapp.com/bfhl', jsonData);
+      const result = await axios.post('https://your-backend-api-url/bfhl', jsonData);
 
       setResponse(result.data);
     } catch (err) {
@@ -41,6 +45,10 @@ function App() {
     if (!response) return null;
 
     const dataToRender = {
+      Status: response.is_success ? 'Success' : 'Failure',
+      'User ID': response.user_id || '',
+      'College Email ID': response.college_email || '',
+      'College Roll Number': response.college_roll_number || '',
       Alphabets: response.alphabets || [],
       Numbers: response.numbers || [],
       'Highest lowercase alphabet': response.highestAlphabet || ''
